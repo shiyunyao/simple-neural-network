@@ -27,23 +27,31 @@ means = np.mean(array,axis = 0)
 std = np.std(array,axis = 0)
 array = (array-means)/std
 
-arr = np.delete(array,[5],axis = 1)
-values = np.delete(array,[0,1,2,3,4],axis = 1)
-arr = np.c_[arr,np.ones(50000)]
-learning_rate = 0.1
-variable = np.random.rand(1,6)
-J_theta = []
-for i in range(1,100):
-	error = np.dot(arr,variable.T) - values
-	variable = variable - learning_rate*np.sum(np.multiply(np.c_[error,error,error,error,error,error],arr),axis = 0)/50000
-	J_theta.append(np.sum(np.multiply(error,error),axis = 0)/50000)
-print(variable)
+def gradient_descent(learning_rate):
+	arr = np.delete(array,[5],axis = 1)
+	values = np.delete(array,[0,1,2,3,4],axis = 1)
+	arr = np.c_[arr,np.ones(50000)]
+	variable = np.random.rand(1,6)
+	J_theta = []
+	for i in range(1,100):
+		error = np.dot(arr,variable.T) - values
+		variable = variable - learning_rate*np.sum(
+			np.multiply(np.c_[error,error,error,error,error,error],arr),axis = 0)/50000
+		J_theta.append(np.sum(np.multiply(error,error),axis = 0)/50000)
+	return J_theta
 
 #figure
 fig = plt.figure()
 ax = fig.add_subplot(111)
 ax.set(xlabel='iteration',ylabel='Error')
-ax.plot(range(1,100),J_theta)
+ax.plot(range(1,100),gradient_descent(0.1),label="0.1")
+ax.legend()
+ax.plot(range(1,100),gradient_descent(0.2),label="0.2")
+ax.legend()
+ax.plot(range(1,100),gradient_descent(0.01),label="0.01")
+ax.legend()
+ax.plot(range(1,100),gradient_descent(0.5),label="0.5")
+ax.legend()
 plt.show()
 
 
