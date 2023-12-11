@@ -11,11 +11,11 @@ with open("housing_price_dataset.csv",mode="r",encoding="utf-8-sig") as f:
 		row[1] = int(row[1])
 		row[2] = int(row[2])
 		if row[3] == "Rural":
-			row[3] = 0
-		elif row[3] == "Suburb":
 			row[3] = 1
-		else:
+		elif row[3] == "Suburb":
 			row[3] = 2
+		else:
+			row[3] = 3
 		row[4] = int(row[4])
 		row[5] = float(row[5])
 
@@ -38,6 +38,7 @@ def gradient_descent(learning_rate):
 		variable = variable - learning_rate*np.sum(
 			np.multiply(np.c_[error,error,error,error,error,error],arr),axis = 0)/50000
 		J_theta.append(np.sum(np.multiply(error,error),axis = 0)/50000)
+	print(variable)
 	return J_theta
 
 #figure
